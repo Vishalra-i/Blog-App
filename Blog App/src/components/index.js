@@ -8,6 +8,12 @@ import Login from "./Login";
 import Button from "./Button";
 import PostCard from "./PostCard";
 import Input from "./Input";
+import RTE from "./RTE";
+import Signup from "./Signup";
+import PostForm from "./Postform/Postform";
+import AuthLayout from "./AuthLayout";
+
+
 export {
     Header,
     Footer,
@@ -19,4 +25,8 @@ export {
     PostCard,
     Input,
     Select,
+    RTE,
+    Signup,
+    PostForm,
+    AuthLayout
 }

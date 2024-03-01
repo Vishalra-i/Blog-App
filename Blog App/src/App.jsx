@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import authservice from './appwrite/auth'
 import { login, logout } from './store/authSlice'
-import { Footer } from './components'
+import { Footer , Header} from './components'
 import Login from './components/Login'
+import Postform from './components/Postform/Postform'
+import { Outlet } from 'react-router-dom'
+
 
 
 function App() {
@@ -22,22 +25,16 @@ function App() {
   }, [])
   
   return !loading ? (
-    <div className="App">
-      <Headers/>
-      <Footer/>
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
+        <Header />
+        <main>
+        TODO:  <Outlet />
+        </main>
+        <Footer />
+      </div>
     </div>
-  ) : (
-    <div className="flex flex-col bg-neutral-300 w-56 h-64 animate-pulse rounded-xl p-4 gap-4">
-       <div className="bg-neutral-400/50 w-full h-32 animate-pulse rounded-md"></div>
-       <div className="flex flex-col gap-2">
-        <Login/>
-       <div className="bg-neutral-400/50 w-full h-4 animate-pulse rounded-md"></div>
-       <div className="bg-neutral-400/50 w-4/5 h-4 animate-pulse rounded-md"></div>
-       <div className="bg-neutral-400/50 w-full h-4 animate-pulse rounded-md"></div>
-       <div className="bg-neutral-400/50 w-2/4 h-4 animate-pulse rounded-md"></div>
-       </div>
-    </div>
-  )
+  ) : null
 }
 
 export default App

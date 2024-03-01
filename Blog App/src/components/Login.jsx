@@ -4,7 +4,9 @@ import {login as authLogin} from '../store/authSlice';
 import {useDispatch} from 'react-redux';
 import authservice from '../appwrite/auth';
 import {set, useForm} from 'react-hook-form';
-import {Logo} from './index'
+import {Logo,Input,Button} from './index'
+
+
 
 
 function Login() {
@@ -27,7 +29,7 @@ function Login() {
     }
 
   return (
-    <div className='flex items-center justify-center w-full'>
+    <div className='flex items-center justify-center py-8 w-full'>
         <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
             <div className="mb-2 flex justify-center">
                 <span className='inline-block w-full max-w-[100px]'>
@@ -59,6 +61,16 @@ function Login() {
                         }
                      })}
                      />
+                     <Input
+                     label="Password"
+                     type="password"
+                     placeholder="Enter Your Password"
+                     {...register("password",{
+                        required:true,
+                        minLength:6,
+                     })}
+                     />
+                     <Button onClick={login} type="submit">Login</Button>
                  </div>
             </form>
         </div>
