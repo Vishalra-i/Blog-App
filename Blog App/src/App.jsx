@@ -13,7 +13,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   useEffect(() => {
-    authservice.getCurrentUser().then((userData)=>{
+     authservice.getCurrentUser().then((userData)=>{
       if(userData){
         dispatch(login({userData}))
       }else(
@@ -25,16 +25,18 @@ function App() {
   }, [])
   
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+    <div className='min-h-screen flex flex-wrap content-between '>
       <div className='w-full block'>
         <Header />
         <main>
-        TODO:  <Outlet />
+        <Outlet />
         </main>
         <Footer />
       </div>
     </div>
-  ) : null
+  ) : (
+    <div>Loading...</div>
+  )
 }
 
 export default App

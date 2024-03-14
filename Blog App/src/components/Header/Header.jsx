@@ -39,26 +39,34 @@ function Header() {
       slug: "/add-post",
       active: authStatus,
   },
+  {
+      name: "User Profile",
+      slug: "/userprofile/:Id",
+      active: authStatus,
+  },
   ]
 
 
   return (
-    <header className='py-3 shadow bg-gray-500'>
-      <Container>
-        <nav className='flex'>
+    <header className='py-3 px-10 z-[10000000000] bg-transparent drop-shadow-xl shadow-md shadow-green-400 fixed top-0 w-screen flex item-center justify-between'>
+      {/* //LOGO  */}
+        <nav className='flex self-center'>
           <div className='mr-4'>
             <Link to='/'>
               <Logo width='70px'   />
 
               </Link>
           </div>
-          <ul className='flex ml-auto'>
+          </nav>
+          
+          <div>
+          <ul className='flex ml-auto gap-5 text-xl font-bold'>
             {navItems.map((item) => 
             item.active ? (
               <li key={item.name}>
                 <button
                 onClick={() => navigate(item.slug)}
-                className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                className={`inline-bock px-6 py-2 duration-200 hover:bg-green-300 rounded-full `}
                 >{item.name}</button>
               </li>
             ) : null
@@ -69,8 +77,7 @@ function Header() {
               </li>
             )}
           </ul>
-        </nav>
-        </Container>
+          </div>
     </header>
   )
 }

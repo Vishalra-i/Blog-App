@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import appwriteService from '../appwrite/config';
+import authservice from '../appwrite/auth';
 import {Link} from 'react-router-dom';
 
-function Postcard({$id ,title,featuredImage}) {
+function Postcard({$id ,title,featuredImage ,author , width="min-w-fit"}) {
+  
+  
   return (
     <Link to={`/post/${$id}`} >
-       <div className='w-full p-4 bg-gray-100 rounded-xl'>
-         <div className="w-full justify-center mb-4">
+       <div className={` ${width} p-4 bg-green-800 text-white rounded-xl`}>
+         <div className="min-w-fit justify-center mb-4">
+           <h1 className=' font-bold p-2 text-4xl'>{title}</h1>
            <img src={`${appwriteService.getFilePreview(featuredImage)}`}
            className='rounded-xl'
            alt={title} 
            />
-           <h2 className='text-xl font-bold '>{title}</h2>
+
+         <h3 className="font-bold text-xl py-5 px-2"><span className="text-red-500">Author:</span> {author}</h3>
          </div>
 
        </div>

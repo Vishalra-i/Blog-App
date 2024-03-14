@@ -14,15 +14,17 @@ export class Service{
     
     }
 
-    async createPost({title,slug,content,featuredImage,status,userId}){
+    async createPost({title,slug,content,featuredImage,status,userId,author}){
        try {
-          await this.databases.createDocument(conf.appwriteDatabaseId,conf.appwriteUrlCollectionId,slug,{
+          let post = await this.databases.createDocument(conf.appwriteDatabaseId,conf.appwriteUrlCollectionId,slug,{
             title,
             content,
-            featuredImage,
+            featuredImage ,
             status,
-            userId
+            userId,
+            author
           })
+          return post;
        } catch (error) {
          console.log(
             "Appwrite Service :: Create-Post Error ::",error
@@ -82,6 +84,17 @@ export class Service{
             console.log("Appwrite Service :: Get-Posts Error ::", error)
         }
     }
+
+    async getUserPost(userData){
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteUrlCollectionId, [Query.equal('userId',userData)]);
+
+        }
+        catch (error) {
+            console.log("Appwrite Service :: Get-Posts Error ::", error)
+        }
+    }
+    
           
  
 

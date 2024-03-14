@@ -14,8 +14,10 @@ function Postform({post}) {
          status: post?.status || "active",
       }
    });
+   console.log(!post)
    const navigate = useNavigate();
-   const useData = useSelector(state=> state.auth.userData)
+   const userData = useSelector(state=> state.auth.userData)
+//    console.log(userData.userData.$id)
    const Submit = async (data) => {
        if(post){
          const file = data.Image[0] ? appwriteService.uploadFile(data.Image[0]) : null
@@ -30,16 +32,19 @@ function Postform({post}) {
          navigate(`/post/${dbPost.$id}`)
        }
       }else{
-         const file = data.image[0] ? await appwriteService.uploadFile(data.Image[0]) : null
+        console.log(`aara hu `)
+         const file = data.Image[0] ? await appwriteService.uploadFile(data.Image[0]) : null
+         console.log(data , userData.userData.name)
 
          if(file){
             const fileId = file.$id
             data.featuredImage = fileId
-            const dbPost = await appwriteService.createPost({
-               ...data,
-               userId: useData.$id,
-            })
-            navigate(`/post/${dbPost.$id}`)
+            const dbPost = await appwriteService.createPost({...data , userId: userData.userData.$id ,author: userData.userData.name})
+            console.log(dbPost)
+           
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
+            }
          }
       }
       }
@@ -54,6 +59,7 @@ function Postform({post}) {
          
             return ''
       },[])
+
 
       React.useEffect(()=>{
         const subscription = watch((value,{name})=>{
@@ -94,9 +100,10 @@ function Postform({post}) {
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
+                    {...register("Image", { required: !post })}
                 />
                 {post && (
+                    
                     <div className="w-full mb-4">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
@@ -111,9 +118,10 @@ function Postform({post}) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                <Button type='submit' bgColor={post ? "bg-green-500" : "bg-red-600"} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Button>
+                
             </div>
         </form>
   )

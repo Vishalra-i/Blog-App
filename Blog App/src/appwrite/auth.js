@@ -46,6 +46,7 @@ export class AuthService {
 
        return null ;
     }
+   
 
     async logout(){
         try {
@@ -54,6 +55,7 @@ export class AuthService {
             console.log("Appwrite Service :: Lo error ::" , error)
         }
     }
+    
     
 }
 
