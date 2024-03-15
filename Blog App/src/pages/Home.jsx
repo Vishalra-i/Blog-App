@@ -3,17 +3,33 @@ import appwriteService from '../appwrite/config';
 import { useNavigate } from 'react-router-dom';
 import { Container,Logo,PostCard } from '../components';
 import { Link } from 'react-router-dom';
+import Loading from './Loading';
 
 
 function Home() {
     const [posts,setPosts] = useState([]);
+    const [loading,setLoading] = useState(true);
+
     useEffect(()=>{
     appwriteService.getPosts().then((post)=>{
         if(post){
             setPosts(post.documents)
         }
-    })
+    }).finally(
+       setTimeout(
+        setLoading(false),
+        1000
+       )
+    )
     },[])
+
+    if(loading){
+        return(
+            <div className="w-full h-screen flex justify-center items-center">
+                <Loading/>
+            </div>
+        )
+    }
 
     if(posts.length === 0){
         return (

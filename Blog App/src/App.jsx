@@ -6,6 +6,7 @@ import { Footer , Header} from './components'
 import Login from './components/Login'
 import Postform from './components/Postform/Postform'
 import { Outlet } from 'react-router-dom'
+import Loading from './pages/Loading'
 
 
 
@@ -20,7 +21,9 @@ function App() {
         dispatch(logout())
       )
     }).finally(
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000)
     )
   }, [])
   
@@ -35,7 +38,9 @@ function App() {
       </div>
     </div>
   ) : (
-    <div>Loading...</div>
+     <div className='flex justify-center items-center h-screen'>
+      <Loading/>
+    </div>
   )
 }
 
