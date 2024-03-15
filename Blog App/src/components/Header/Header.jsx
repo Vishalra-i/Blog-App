@@ -48,9 +48,9 @@ function Header() {
 
 
   return (
-    <header className='py-3 px-10 z-[10000000000] bg-transparent drop-shadow-xl shadow-md shadow-green-400 fixed top-0 w-screen flex item-center justify-between'>
+    <header className='py-3 px-10 backdrop-blur-md  z-[10000000000] bg-transparent drop-shadow-xl shadow-md shadow-green-400 fixed top-0 w-screen flex item-center justify-between'>
       {/* //LOGO  */}
-        <nav className='flex self-center'>
+        <nav className='flex  self-center'>
           <div className='mr-4'>
             <Link to='/'>
               <Logo width='70px'   />
