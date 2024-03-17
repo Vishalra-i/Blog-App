@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import authservice from './appwrite/auth'
 import { login, logout } from './store/authSlice'
 import { Footer , Header} from './components'
@@ -13,6 +13,12 @@ import Loading from './pages/Loading'
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+
+  // const themeMode = useSelector((state) => state.themeMode);
+
+  // const handleToggleTheme = () => {
+  //   dispatch(themeMode);
+  // };
   useEffect(() => {
      authservice.getCurrentUser().then((userData)=>{
       if(userData){
@@ -28,7 +34,8 @@ function App() {
   }, [])
   
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between '>
+    <div className='min-h-screen flex bg-[#FAF9F6] flex-wrap content-between '>
+      {/* <button className='bg-[#EDEADE] text-black left-52 absolute top-20 ' onClick={handleToggleTheme}>Toggle</button> */}
       <div className='w-full block'>
         <Header />
         <main>

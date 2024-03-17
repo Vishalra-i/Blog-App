@@ -14,7 +14,7 @@ export class Service{
     
     }
 
-    async createPost({title,slug,content,featuredImage,status,userId,author}){
+    async createPost({title,slug,content,featuredImage,status,userId,author,category}){
        try {
           let post = await this.databases.createDocument(conf.appwriteDatabaseId,conf.appwriteUrlCollectionId,slug,{
             title,
@@ -22,7 +22,10 @@ export class Service{
             featuredImage ,
             status,
             userId,
-            author
+            author,
+            // created,
+            category
+
           })
           return post;
        } catch (error) {
@@ -41,7 +44,7 @@ export class Service{
                     title,
                     content,
                     featuredImage,
-                    status
+                    status,
                 }
 
             )
@@ -75,7 +78,7 @@ export class Service{
         }
     }
 
-    async getPosts(queries = [Query.equal("status","active")]){
+    async getPosts(queries){
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteUrlCollectionId, queries);
             

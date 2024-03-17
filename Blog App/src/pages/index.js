@@ -5,11 +5,13 @@ import EditPost from "./EditPost";
 import Login from "./Login";
 import Post from "./Post";
 import Signup from "./Signup";
+import Error from "./Error";
+import Loading from "./Loading";
 
 
 
 
-export {Home,AddPost,AllPost,EditPost,Login,Signup,Post}
+export {Home,AddPost,AllPost,EditPost,Login,Signup,Post,Error,Loading}
 
 
 

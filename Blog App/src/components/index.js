@@ -13,6 +13,7 @@ import Signup from "./Signup";
 import PostForm from "./Postform/Postform";
 import AuthLayout from "./AuthLayout";
 import Userprofile from "./Postform/Userprofile";
+import Category from "./Category"
 
 
 export {
@@ -30,5 +31,6 @@ export {
     Signup,
     PostForm,
     AuthLayout,
-    Userprofile
+    Userprofile,
+    Category
 }

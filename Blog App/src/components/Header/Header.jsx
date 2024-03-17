@@ -34,21 +34,17 @@ function Header() {
       slug: "/all-posts",
       active: authStatus,
   },
-  {
-      name: "Add Post",
-      slug: "/add-post",
-      active: authStatus,
-  },
-  {
-      name: "User Profile",
-      slug: "/userprofile/:Id",
-      active: authStatus,
-  },
+  
+  // {
+  //     name: "Add Post",
+  //     slug: "/add-post",
+  //     active: authStatus,
+  // },
   ]
 
 
   return (
-    <header className='py-3 px-10 backdrop-blur-md  z-[10000000000] bg-transparent drop-shadow-xl shadow-md shadow-green-400 fixed top-0 w-screen flex item-center justify-between'>
+    <header className='py-3 px-10 backdrop-blur-md z-[10000000000] bg-transparent drop-shadow-xl shadow-md shadow-green-400 fixed top-0 w-screen flex item-center justify-between'>
       {/* //LOGO  */}
         <nav className='flex  self-center'>
           <div className='mr-4'>
@@ -71,13 +67,28 @@ function Header() {
               </li>
             ) : null
             )}
-            {authStatus && (
-              <li>
-                <Logoutbtn />
-              </li>
-            )}
-          </ul>
+            </ul>
           </div>
+          
+          <div>
+            <ul className='flex gap-5'>
+            {authStatus && (
+              <>
+              <li>
+                <button onClick={() => navigate('/add-post')} className={`inline-bock px-4 mt-1 py-2 duration-200 text-base hover:bg-purple-300 text-white bg-purple-500 rounded-full `}>
+                   📝 Write
+                </button>
+              </li>
+              <li>
+                <Link to={'/userprofile/:Id'}>
+                  <img width="50" height="50" className='border-2 rounded-full hover:border-green-400  border-black' src="https://img.icons8.com/bubbles/50/user.png" alt="user"/>
+                </Link>
+               </li>
+              </>
+            )}
+            </ul>
+          </div>
+
     </header>
   )
 }
