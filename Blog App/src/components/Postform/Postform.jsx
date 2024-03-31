@@ -23,6 +23,7 @@ function Postform({post}) {
          slug: post?.$id || "",
          content: post?.content || "",
          status: post?.status || "active",
+         category: post?.category || "",
       }
    });
    console.log(!post)

@@ -10,19 +10,29 @@ export default function Post() {
     const { slug } = useParams();
     const navigate = useNavigate();
 
-    console.log(slug)
-
     const userData = useSelector((state) => state.auth.userData);
 
     const isAuthor = post && userData ? post.userId === userData.userData.$id : false;
 
     useEffect(() => {
+        const fetchPost = async () => {
+            try {
+                const fetchedPost = await appwriteService.getPost(slug);
+                if (fetchedPost) {
+                    setPost(fetchedPost);
+                } else {
+                    navigate("/");
+                }
+            } catch (error) {
+                console.error("Error fetching post:", error);
+            }
+        };
+
         if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
-        } else navigate("/");
+            fetchPost();
+        } else {
+            navigate("/");
+        }
     }, [slug, navigate]);
 
     const deletePost = () => {
@@ -34,39 +44,40 @@ export default function Post() {
         });
     };
 
-    
-
     return post ? (
         <div className="py-8">
             <Container>
-               <h1 className="text-4xl text-center font-bold py-4">{post.title}</h1>
+                <h1 className="text-4xl text-center font-bold py-4">{post.title}</h1>
 
                 <div className="w-full h-[30.6rem] flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
                         src={`${appwriteService.getFilePreview(post.featuredImage)}&mode=admin`}
                         alt={post.title}
-                        className="rounded-xl object-contain"
+                        className="rounded-xl object-cover w-full h-full"
                     />
-
+                
                     {isAuthor && (
                         <div className="absolute right-6 top-6">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
+                                <Button bgColor="bg-green-500 hover:scale-105" className="mr-3">
                                     Edit
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
+                            <Button bgColor="bg-red-500 hover:scale-105" onClick={deletePost}>
                                 Delete
                             </Button>
                         </div>
                     )}
                 </div>
+
+
                 <div className="w-full mb-6">
-                  <h1 className="font-bold text-3xl py-5 px-2"><span className="text-red-500">Author:</span> {post.author}</h1>
+                    <h1 className="font-bold text-3xl py-5 px-2"><span className="text-red-500">Author:</span> {post.author}</h1>
                 </div>
+
                 <div className="browser-css">
                     {parse(post.content)}
-                    </div>
+                </div>
             </Container>
         </div>
     ) : null;
