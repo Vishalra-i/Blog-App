@@ -8,7 +8,7 @@ function Category({ onChange }) {
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setSelectedCategory(category);
-    console.log(category); // Log the selected category
+    console.log("main",category); // Log the selected category
     onChange(category);
   };
 

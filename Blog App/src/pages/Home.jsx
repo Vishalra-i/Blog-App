@@ -58,7 +58,7 @@ function Home() {
     if(posts.length === 0){
         return (
             <Container>
-            <div className='flex flex-col gap-8 justify-center w-full items-center h-[400px]'>
+            <div className='flex flex-col  gap-8 justify-center w-full items-center h-[400px]'>
                <TypewriterEffect words={words}/>
                  <TextGenerateEffect words={words2}/>
                <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
@@ -96,9 +96,9 @@ function Home() {
     return(
         <div className="w-full py-8">
             <Container>
-            <div className="flex  flex-wrap">
+            <div className="flex flex-col gap-5 flex-wrap">
                 {posts.map((post)=>(
-                    <div key={post.$id} className='w-1/2 p-1 '>
+                    <div key={post.$id} className=' p-1 '>
                         <PostCard {...post}/>
                     </div>
                 ))}

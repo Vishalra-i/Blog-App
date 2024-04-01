@@ -35,9 +35,9 @@ export class Service{
        }
     }
 
-    async updatePost(slug,{title,content,featuredImage,status}){
+    async updatePost(slug,{title,content,featuredImage,status,category}){
         try {
-            await this.databases.updateDocument(conf.appwriteDatabaseId,
+            let post = await this.databases.updateDocument(conf.appwriteDatabaseId,
                 conf.appwriteUrlCollectionId,
                 slug,
                 {
@@ -45,9 +45,12 @@ export class Service{
                     content,
                     featuredImage,
                     status,
+                    category
                 }
+               
 
             )
+            return post
         } catch (error) {
             console.log("Appwrite Service :: Update-Post Error ::",error)
         }

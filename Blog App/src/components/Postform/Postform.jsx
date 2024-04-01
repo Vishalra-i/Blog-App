@@ -10,11 +10,12 @@ import {  useSelector } from 'react-redux';
 function Postform({post}) {
 
 
-    const [categories, setCategories] = useState("");
-    const [statusbar , setSetatusbar] = useState("")
+  const [categories, setCategories] = useState(post?.category || "");
+
+  const [statusbar , setSetatusbar] = useState("")
 
     const selectCat = (selectedCategory) => {
-      setCategories(selectedCategory);
+       setCategories(selectedCategory);
     }
     
        let {register,handleSubmit,watch,setValue,control,getValues} = useForm({
@@ -26,22 +27,23 @@ function Postform({post}) {
          category: post?.category || "",
       }
    });
-   console.log(!post)
    const navigate = useNavigate();
    const userData = useSelector(state=> state.auth.userData)
 //    console.log(userData.userData.$id)
    const Submit = async (data) => {
        console.log(data)
        if(post){
-         const file = data.Image[0] ? appwriteService.uploadFile(data.Image[0]) : null
+         const file = data.Image[0] ?  appwriteService.uploadFile(data.Image[0]) : null
        if(file){
          appwriteService.deletFile(post.featuredImage)
        }
-       const dbPost = appwriteService.updatePost(post.$id,{
+       data.category = categories
+       const dbPost = await appwriteService.updatePost(post.$id,{
          ...data,
          featuredImage: file ? file.$id : undefined
        })
-       console.log("YES Edited")
+       setSetatusbar("Post updated successfully")
+       console.log("Edited")
        if(dbPost){
          navigate(`/post/${dbPost.$id}`)
        }
@@ -95,8 +97,8 @@ function Postform({post}) {
 
   return (
     <>
-     <form onSubmit={handleSubmit(Submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+     <form onSubmit={handleSubmit(Submit)} className="flex sm:flex-row flex-col flex-wrap">
+            <div className="sm:w-2/3 w-full px-2">
                 <Input
                     label="Title :"
                     placeholder="Title"
@@ -114,7 +116,7 @@ function Postform({post}) {
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
-            <div className="w-1/3 px-2">
+            <div className="sm:w-1/3 w-full px-2">
                 <Input
                     label="Featured Image :"
                     type="file"
@@ -146,7 +148,7 @@ function Postform({post}) {
                 </span>
                 </div>
 
-                <Button type='submit' bgColor={post ? "bg-green-500" : "bg-red-600"} className="w-full">
+                <Button type='submit' bgColor={post ? "bg-green-500" : "bg-red-600"} className="sm:w-full w-[300px]">
                     {post ? "Update" : "Submit"}
                 </Button>
                 

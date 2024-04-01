@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
-import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import parse, { domToReact } from "html-react-parser"; // Import the parse and domToReact functions from html-react-parser
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -53,30 +53,45 @@ export default function Post() {
                     <img
                         src={`${appwriteService.getFilePreview(post.featuredImage)}&mode=admin`}
                         alt={post.title}
-                        className="rounded-xl object-cover w-full h-full"
+                        className="rounded-xl object-contain"
                     />
-                
+
                     {isAuthor && (
                         <div className="absolute right-6 top-6">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500 hover:scale-105" className="mr-3">
+                                <Button bgColor="bg-green-500" className="mr-3">
                                     Edit
                                 </Button>
                             </Link>
-                            <Button bgColor="bg-red-500 hover:scale-105" onClick={deletePost}>
+                            <Button bgColor="bg-red-500" onClick={deletePost}>
                                 Delete
                             </Button>
                         </div>
                     )}
                 </div>
 
-
                 <div className="w-full mb-6">
                     <h1 className="font-bold text-3xl py-5 px-2"><span className="text-red-500">Author:</span> {post.author}</h1>
                 </div>
 
-                <div className="browser-css">
-                    {parse(post.content)}
+                <div className="content">
+                    {parse(post.content, {
+                        replace: (domNode) => {
+                            if (domNode.name === 'h1') {
+                                return <h1 className="font-bold text-3xl">{domToReact(domNode.children)}</h1>;
+                            } else if (domNode.name === 'h2') {
+                                return <h2 className="font-bold text-2xl">{domToReact(domNode.children)}</h2>;
+                            } else if (domNode.name === 'p') {
+                                return <p className="my-3 font-medium">{domToReact(domNode.children)}</p>;
+                            } else if (domNode.name === 'pre') {
+                                return <pre className="my-3 bg-gray-500 rounded-md p-2 w-fit ">{domToReact(domNode.children)}</pre>;
+                            } else if (domNode.name === 'code') {
+                                return <code className=" rounded-md">{domToReact(domNode.children)}</code>;
+                            } else if (domNode.name === 'hr') {
+                                return <hr className="my-6" />;
+                            }
+                        }
+                    })}
                 </div>
             </Container>
         </div>
